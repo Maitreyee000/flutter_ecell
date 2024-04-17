@@ -35,7 +35,7 @@ class _RequirementFormState extends State<RequirementForm> {
   };
   Future<void> loadInitialData() async {
     EasyLoading.show(status: "Loading...");
-    var support = await Support.instance;
+    var support = await Support.init();
     String? uuid = await support.getString('uuid');
     var data = {"phone": uuid.toString()};
     dropdown_cell =
@@ -204,7 +204,7 @@ class _RequirementFormState extends State<RequirementForm> {
 
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
-                                  var support = await Support.instance;
+                                  var support = await Support.init();
                                   String? uuid =
                                       await support.getString('uuid');
                                   var data = {
@@ -275,18 +275,16 @@ class _RequirementFormState extends State<RequirementForm> {
   void onCellSelected(String value) {
     setState(() {
       sel_cell = value;
-      // Reset the item quantities to just one empty pair of item name and quantity
+
       itemQuantities = [
         {
           "item_name": TextEditingController(),
           "quantity": TextEditingController(),
         }
       ];
-      // Ensure cell_name_id is correctly set
-      req["cell_name_id"] =
-          value; // Make sure this value is correctly obtained from the dropdown
 
-      // You may want to clear or initialize cell_req here as well, depending on your needs
+      req["cell_name_id"] = value;
+
       req["cell_req"] = [];
     });
   }

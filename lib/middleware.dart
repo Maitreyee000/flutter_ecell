@@ -7,11 +7,12 @@ class Middleware extends StatefulWidget {
 
 class _MiddlewareState extends State<Middleware> {
   Future<void> start() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     String? statusCode = await support.getString('statusCode');
     String? uuid = await support.getString('uuid');
     String? token = await support.getString('token');
     bool justLoggedIn = await support.getBool('justLoggedIn') ?? false;
+
     if (token != null && uuid != null) {
       try {
         final jwt = JWT.decode(token);
@@ -53,22 +54,22 @@ class _MiddlewareState extends State<Middleware> {
   @override
   void initState() {
     super.initState();
+    checkDeviceSecurity();
+  }
 
-    Future<void> requestPermissions() async {
-      // Request location permission
-      var status = await Permission.location.request();
+  Future<void> checkDeviceSecurity() async {
+    // await start();
+    bool isJailbroken = await FlutterJailbreakDetection.jailbroken;
+    bool isDeveloperMode = await FlutterJailbreakDetection.developerMode;
+    bool isSignatureValid = await PlatformService.checkAppSignature();
 
-      if (status == PermissionStatus.granted) {
-      } else if (status == PermissionStatus.denied) {
-      } else if (status == PermissionStatus.permanentlyDenied) {
-        openAppSettings();
-      }
+    if (isJailbroken || isSignatureValid == false || isDeveloperMode) {
+      Navigator.pushReplacementNamed(context, "404");
+    } else {
+      await start();
     }
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      requestPermissions();
-      start();
-    });
+    setState(() {});
   }
 
   @override
@@ -88,7 +89,7 @@ class _MiddlewareState extends State<Middleware> {
                 'lib/assets/loading.gif',
                 scale: 1,
               ),
-            ),
+            )
           ],
         ),
       ),

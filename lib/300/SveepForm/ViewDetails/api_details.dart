@@ -27,7 +27,7 @@ class _ApiDetailsState extends State<ApiDetails> {
 
   Future<void> loadInitialData() async {
     try {
-      var support = await Support.instance;
+      var support = await Support.init();
       var uuid = await support.getString('uuid');
 
       var payload = {
@@ -44,7 +44,7 @@ class _ApiDetailsState extends State<ApiDetails> {
       long.text = data!['longitude'].toString();
       remarks.text = data!['remarks'].toString();
     } catch (e) {
-      print(e);
+      // print(e);
     }
 
     setState(() {});
@@ -151,7 +151,7 @@ class _ApiDetailsState extends State<ApiDetails> {
                           //   child: CustomElevatedButton(
                           //       onPressed: () async {
                           //         Map<String, dynamic> formData = {};
-                          //         var support = await Support.instance;
+                          //         var support = await Support.init();
                           //         String? uuid =
                           //             await support.getString('uuid');
                           //         formData = {

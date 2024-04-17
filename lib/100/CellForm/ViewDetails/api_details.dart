@@ -22,8 +22,6 @@ class _ApiDetailsState extends State<ApiDetails> {
   final _formKey = GlobalKey<FormState>();
   CustomForm customForm = CustomForm();
 
-  bool isPasswordVisible = false;
-
   Future<void> loadInitialData() async {
     var id = {"cell_id": widget.idData.toString()};
 
@@ -124,7 +122,7 @@ class _ApiDetailsState extends State<ApiDetails> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
-                                  var support = await Support.instance;
+                                  var support = await Support.init();
                                   String? uuid =
                                       await support.getString('uuid');
                                   var payload = {
@@ -140,11 +138,17 @@ class _ApiDetailsState extends State<ApiDetails> {
                                     _formKey.currentState!.reset();
                                     cell_id.clear();
                                     cell_name.clear();
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                CellFormHome()));
+
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ApiDataList()),
+                                    );
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             CellFormHome()));
                                   }
                                 }
                               },

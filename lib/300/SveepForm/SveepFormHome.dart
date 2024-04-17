@@ -86,17 +86,20 @@ class _HomeState extends State<SveepFormHome> {
               child: Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    margin: EdgeInsets.symmetric(
+                        vertical: height * 0.02, horizontal: width * 0.05),
                     alignment: Alignment.topCenter,
-                    color: Color(0xff015495),
+                    decoration: BoxDecoration(
+                        color: Color(0xff015495),
+                        borderRadius: BorderRadius.circular(10)),
                     height: 100,
                     child: Container(
-                      margin: EdgeInsets.all(20),
-                      child: Text(
+                      margin: const EdgeInsets.all(20),
+                      child: const Text(
                         "Selection Menu",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),

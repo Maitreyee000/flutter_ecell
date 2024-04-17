@@ -9,7 +9,7 @@ class Middleware extends StatefulWidget {
 
 class _MiddlewareState extends State<Middleware> {
   Future<void> start() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     String? uuid = await support.getString('uuid');
     bool justLoggedIn = await support.getBool('justLoggedIn') ?? false;
     try {
@@ -37,7 +37,7 @@ class _MiddlewareState extends State<Middleware> {
   }
 
   Future<bool> loadData(String? uuid) async {
-    var support = await Support.instance;
+    var support = await Support.init();
     String? _token = await support.getString('token');
     String? statusCode = await support.getString('statusCode');
     //api_urls

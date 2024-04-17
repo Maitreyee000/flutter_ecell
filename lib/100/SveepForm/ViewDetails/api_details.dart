@@ -34,7 +34,7 @@ class _ApiDetailsState extends State<ApiDetails> {
   CustomForm customForm = CustomForm();
 
   Future<void> loadInitialData() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     String? uuid = await support.getString('uuid');
     var id = {"id": widget.idData.toString()};
 
@@ -152,7 +152,7 @@ class _ApiDetailsState extends State<ApiDetails> {
                             child: CustomElevatedButton(
                                 onPressed: () async {
                                   Map<String, dynamic> formData = {};
-                                  var support = await Support.instance;
+                                  var support = await Support.init();
                                   String? uuid =
                                       await support.getString('uuid');
                                   formData = {

@@ -1,3 +1,6 @@
+import 'package:cell_req/100/user_profile.dart';
+import 'package:cell_req/about_us.dart';
+
 import './Helper/index.dart';
 
 class SideBar extends StatefulWidget {
@@ -11,7 +14,7 @@ class _SideBarState extends State<SideBar> {
   var name;
 
   start() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     name = await support.getString('name');
     setState(() {});
   }
@@ -77,12 +80,12 @@ class _SideBarState extends State<SideBar> {
                   Container(
                     padding: EdgeInsets.all(10),
                     child: Image.asset(
-                      'lib/assets/ashok.png',
+                      'lib/assets/sesa.png',
                       scale: 8,
                     ),
                   ),
                   Container(
-                      margin: EdgeInsets.only(top: 5, bottom: 20),
+                      margin: EdgeInsets.only(top: 5, bottom: 15),
                       child: Text(
                         '${name}',
                         style: TextStyle(
@@ -90,6 +93,21 @@ class _SideBarState extends State<SideBar> {
                             fontWeight: FontWeight.w700,
                             fontSize: 16),
                       )),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: CustomElevatedButton(
+                  //       color: Color(0xFF1a434d),
+                  //       onPressed: () {
+                  //         Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //                 builder: (context) => UserProfile()));
+                  //       },
+                  //       radius: 10,
+                  //       height: 4,
+                  //       width: 30,
+                  //       buttonText: "View Profile"),
+                  // )
                 ],
               ),
             ),
@@ -140,6 +158,17 @@ class _SideBarState extends State<SideBar> {
             //   // onTap: () => index_redirect(context, () => UserManagementHome()),
             // ),
             Divider(),
+            ListTile(
+              title: Text(
+                'About Us',
+                style: _drawListTile(),
+              ),
+              leading: Icon(
+                Icons.info,
+                color: _iconColorDrawer(),
+              ),
+              onTap: () => index_redirect(context, () => AboutUs()),
+            ),
             ListTile(
               title: Text(
                 'Logout',

@@ -5,8 +5,6 @@ Timer? _rootTimer;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  //('User granted permission: ${settings.authorizationStatus}');
-
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -35,7 +33,6 @@ class MyApp extends StatelessWidget {
 }
 
 class AppRoot extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   AppRootState createState() => AppRootState();
 }
@@ -45,6 +42,7 @@ class AppRootState extends State<AppRoot> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     initializeTimer();
   }
 
@@ -117,7 +115,7 @@ class AppRootState extends State<AppRoot> {
       child: MaterialApp(
           onGenerateRoute: RouteManager.generateRoute,
           debugShowCheckedModeBanner: false,
-          title: 'eCell DEMO',
+          title: 'Cell Requirement System',
           theme: ThemeData(
             primarySwatch: createMaterialColor(Color(0xff1e3799)),
           ),

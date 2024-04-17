@@ -92,7 +92,7 @@ class _ApiListDisposeState extends State<ApiListDispose> {
         child: details == null || details!.isEmpty
             ? Center(
                 child: Text(
-                  "No Data Avalable",
+                  "No Data Available",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               )
@@ -121,13 +121,9 @@ class _ApiListDisposeState extends State<ApiListDispose> {
           children: [
             buildCell("Sl",
                 flex: 1, textAlign: TextAlign.left, color: Colors.white),
-            VerticalDivider(),
             buildCell("Item Name", flex: 2, color: Colors.white),
-            VerticalDivider(),
             buildCell("Quantity", flex: 1, color: Colors.white),
-            VerticalDivider(),
             buildCell("Req. To", flex: 2, color: Colors.white),
-            VerticalDivider(),
             buildCell("Req. By", flex: 2, color: Colors.white),
           ],
         ),

@@ -1197,7 +1197,7 @@ class CustomForm {
         ),
       ]);
     } catch (e) {
-      print('Error decoding base64 image: $e');
+      // print('Error decoding base64 image: $e');
       return TableRow(children: [
         TableCell(
           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1312,13 +1312,29 @@ class CustomForm {
           verticalAlignment: TableCellVerticalAlignment.middle,
           child: Center(
             child: TextButton(
-              onPressed: () => _selectDate(
-                context: context,
-                initialDate: endDate ?? (startDate ?? DateTime.now()),
-                firstDate: startDate ?? DateTime.now(),
-                lastDate: DateTime(2025),
-                onDateChanged: onEndChanged,
-              ),
+              onPressed: () {
+                DateTime now = DateTime.now();
+                // For past dates, set lastDate to today and firstDate to an earlier date.
+                DateTime lastAllowedDate =
+                    DateTime(now.year, now.month, now.day);
+                // Assuming you want to allow selection of dates from up to 10 years in the past.
+                DateTime firstAllowedDate =
+                    DateTime(now.year - 10, now.month, now.day);
+
+                // Ensure initialDate is within the allowed range.
+                DateTime effectiveInitialDate = endDate ??
+                    (startDate != null && startDate.isBefore(now)
+                        ? startDate
+                        : lastAllowedDate);
+
+                _selectDate(
+                  context: context,
+                  initialDate: effectiveInitialDate,
+                  firstDate: firstAllowedDate,
+                  lastDate: lastAllowedDate,
+                  onDateChanged: onEndChanged,
+                );
+              },
               child: Text(
                 endDate == null ? endFieldName : dateFormat.format(endDate),
                 style: TextStyle(fontSize: 16),

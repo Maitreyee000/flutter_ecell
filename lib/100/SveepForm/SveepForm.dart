@@ -22,7 +22,7 @@ class _SveepFormState extends State<SveepForm> {
 
   Future<void> loadDataAndInitialize() async {
     EasyLoading.show(status: "Loading...");
-    var support = await Support.instance;
+    var support = await Support.init();
     String? uuid = await support.getString('uuid');
     var data = {"phone": uuid.toString()};
 
@@ -121,7 +121,7 @@ class _SveepFormState extends State<SveepForm> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  var support = await Support.instance;
+                  var support = await Support.init();
                   String? uuid = await support.getString('uuid');
                   var data = {
                     "phone": p_no.text.toString(),

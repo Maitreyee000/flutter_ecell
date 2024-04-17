@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
   List slides = [1, 2, 3];
   String? name;
   Future<void> loadData() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     name = await support.getString('name');
     setState(() {});
   }
@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Color(0xff112948),
         title: Container(
           margin: EdgeInsets.only(left: width * 0.15),
-          child: Text(
+          child: const Text(
             "eCell System",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -128,44 +128,77 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
+            // Container(
+            //   width: width,
+            //   child: Center(
+            //     child: CarouselSlider(
+            //       options: CarouselOptions(
+            //         onPageChanged: (value, reason) {
+            //           setState(() {
+            //             curSlide = value.toDouble();
+            //           });
+            //         },
+            //         height: MediaQuery.of(context).size.height * .22,
+            //         viewportFraction: 1,
+            //         autoPlay: true,
+            //         autoPlayInterval: const Duration(seconds: 4),
+            //         autoPlayAnimationDuration: const Duration(seconds: 2),
+            //         autoPlayCurve: Curves.ease,
+            //         enlargeCenterPage: true,
+            //       ),
+            //       items: slides.map((i) {
+            //         return Image.asset(
+            //           "lib/assets/slide-$i.jpg",
+            //           fit: BoxFit.cover, // This line was changed
+            //         );
+            //       }).toList(),
+            //     ),
+            //   ),
+            // ),
             Container(
-              width: width,
-              child: Center(
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    onPageChanged: (value, reason) {
-                      setState(() {
-                        curSlide = value.toDouble();
-                      });
-                    },
-                    height: MediaQuery.of(context).size.height * .22,
-                    viewportFraction: 1,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 4),
-                    autoPlayAnimationDuration: const Duration(seconds: 2),
-                    autoPlayCurve: Curves.ease,
-                    enlargeCenterPage: true,
+              width: width * 0.7,
+              height: height * 0.27,
+              margin: const EdgeInsets.only(right: 15, left: 15),
+              decoration: BoxDecoration(
+                color: Color(0xFF1a434d),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Image.asset(
+                      'lib/assets/ashok.png',
+                      scale: 8,
+                    ),
                   ),
-                  items: slides.map((i) {
-                    return Image.asset(
-                      "lib/assets/slide-$i.jpg",
-                      fit: BoxFit.cover, // This line was changed
-                    );
-                  }).toList(),
-                ),
+                  Container(
+                      margin: EdgeInsets.only(
+                        top: 5,
+                      ),
+                      child: Text(
+                        '${name}',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16),
+                      )),
+                ],
               ),
             ),
+
             Container(
               child: Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
                     alignment: Alignment.topCenter,
                     color: Color(0xff015495),
                     height: 100,
                     child: Container(
-                      margin: EdgeInsets.all(20),
-                      child: Text(
+                      margin: const EdgeInsets.all(20),
+                      child: const Text(
                         "Selection Menu",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -176,7 +209,8 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 60, horizontal: 20),
                     height: (height * 0.12) * (items.length / 3).ceil(),
                     decoration: BoxDecoration(
                         color: Colors.black,
@@ -255,7 +289,7 @@ class CustomRow extends StatelessWidget {
               Text(
                 text,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
