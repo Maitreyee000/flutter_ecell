@@ -7,11 +7,12 @@ class Middleware extends StatefulWidget {
 
 class _MiddlewareState extends State<Middleware> {
   Future<void> start() async {
-    var support = await Support.instance;
+    var support = await Support.instance; //Its a user defined function
     String? statusCode = await support.getString('statusCode');
     String? uuid = await support.getString('uuid');
     String? token = await support.getString('token');
     bool justLoggedIn = await support.getBool('justLoggedIn') ?? false;
+    //how are we getting this if its not set first
     if (token != null && uuid != null) {
       try {
         final jwt = JWT.decode(token);
@@ -19,10 +20,11 @@ class _MiddlewareState extends State<Middleware> {
           final expiryTime =
               DateTime.fromMillisecondsSinceEpoch(jwt.payload['exp'] * 1000);
           if (expiryTime.isBefore(DateTime.now())) {
+            //if token is expired then logout
             logoutAndShowMessage();
-            navigateTo(Login());
+            navigateTo(Login()); //navigateto is a user defined function
           } else {
-            Navigator.pushReplacementNamed(context, statusCode!);
+            Navigator.pushReplacementNamed(context, statusCode!); //goes to routes.dart
           }
         }
       } on JWTException catch (e) {
@@ -35,8 +37,9 @@ class _MiddlewareState extends State<Middleware> {
   }
 
   void logoutAndShowMessage() {
-    Logout.promptLogout(context);
+    Logout.promptLogout(context); //how we got this logout object
     ScaffoldMessenger.of(context).showSnackBar(
+      //show this snackbar
       SnackBar(
         content: const Text('Your session has expired. Please log in again.'),
       ),
@@ -45,6 +48,7 @@ class _MiddlewareState extends State<Middleware> {
 
   void navigateTo(Widget page) {
     Navigator.pushReplacement(
+      //pushing given page into navigator
       context,
       MaterialPageRoute(builder: (context) => page),
     );

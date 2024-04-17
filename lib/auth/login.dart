@@ -10,9 +10,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController uuid = TextEditingController();
   TextEditingController password = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>(); //whats this
   bool isPasswordVisible = false;
-  final customForm = CustomForm();
+  final customForm = CustomForm(); //defined in widgets.dart
   final validator = Validator();
   var sel_user_role;
   var user_role = [
@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
               ),
               padding: EdgeInsets.all(20),
               child: Form(
-                  key: _formKey,
+                  key: _formKey, //where is form key defined exactly
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -111,6 +111,7 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: height * 0.02),
                       customForm!.dropDown(
+                        //what is custom form doing though?
                         "  Select User Type",
                         "Select",
                         (value) {

@@ -5,6 +5,8 @@ import 'package:image/image.dart' as ui;
 import '../index.dart';
 
 class ScreenDimensions {
+  //its returning screen size right?
+  //where is it used
   final double height;
   final double width;
 
@@ -14,12 +16,14 @@ class ScreenDimensions {
     if (context == null) {
       return ScreenDimensions(0.0, 0.0);
     }
-    final Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context)
+        .size; //is used to get the size of the screen in Flutter
     return ScreenDimensions(size.height, size.width);
   }
 }
 
 TableRow radioButtonFieldGroup({
+  //TableRow is a flutter class
   required String fieldName,
   required List<String> options,
   required String groupValue, // <-- New parameter for external control
@@ -31,7 +35,7 @@ TableRow radioButtonFieldGroup({
         verticalAlignment: TableCellVerticalAlignment.middle,
         child: Center(
           child: Text(
-            fieldName,
+            fieldName, //display this within the cell
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
@@ -1716,6 +1720,7 @@ class _ImageSelectionWidgetState extends State<ImageSelectionWidget> {
 //// bottom banner
 
 Widget nicBottomBar() {
+  //how is its size determined???
   return Container(
     child: Image.asset(
       'lib/assets/bottomLogo.png',

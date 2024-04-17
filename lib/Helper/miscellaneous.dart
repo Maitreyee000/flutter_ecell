@@ -2,7 +2,7 @@ import '../index.dart';
 
 class Support {
   static Support? _instance;
-  static SharedPreferences? _prefs;
+  static SharedPreferences? _prefs; //to access shared preferences
 
   Support._(); // Private constructor
 

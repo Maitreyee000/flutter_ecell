@@ -1,7 +1,9 @@
 import 'index.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 Timer? _rootTimer;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -117,7 +119,7 @@ class AppRootState extends State<AppRoot> {
       child: MaterialApp(
           onGenerateRoute: RouteManager.generateRoute,
           debugShowCheckedModeBanner: false,
-          title: 'eCell DEMO',
+          title: 'eCell DEMO (Checking)',
           theme: ThemeData(
             primarySwatch: createMaterialColor(Color(0xff1e3799)),
           ),
