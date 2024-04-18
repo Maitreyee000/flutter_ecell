@@ -7,12 +7,11 @@ class Middleware extends StatefulWidget {
 
 class _MiddlewareState extends State<Middleware> {
   Future<void> start() async {
-    var support = await Support.instance; //Its a user defined function
+    var support = await Support.init();
     String? statusCode = await support.getString('statusCode');
     String? uuid = await support.getString('uuid');
     String? token = await support.getString('token');
     bool justLoggedIn = await support.getBool('justLoggedIn') ?? false;
-    //how are we getting this if its not set first
     if (token != null && uuid != null) {
       try {
         final jwt = JWT.decode(token);
@@ -24,7 +23,8 @@ class _MiddlewareState extends State<Middleware> {
             logoutAndShowMessage();
             navigateTo(Login()); //navigateto is a user defined function
           } else {
-            Navigator.pushReplacementNamed(context, statusCode!); //goes to routes.dart
+            Navigator.pushReplacementNamed(
+                context, statusCode!); //goes to routes.dart
           }
         }
       } on JWTException catch (e) {
@@ -57,22 +57,22 @@ class _MiddlewareState extends State<Middleware> {
   @override
   void initState() {
     super.initState();
+    checkDeviceSecurity();
+  }
 
-    Future<void> requestPermissions() async {
-      // Request location permission
-      var status = await Permission.location.request();
+  Future<void> checkDeviceSecurity() async {
+    // await start();
+    bool isJailbroken = await FlutterJailbreakDetection.jailbroken;
+    bool isDeveloperMode = await FlutterJailbreakDetection.developerMode;
+    bool isSignatureValid = await PlatformService.checkAppSignature();
 
-      if (status == PermissionStatus.granted) {
-      } else if (status == PermissionStatus.denied) {
-      } else if (status == PermissionStatus.permanentlyDenied) {
-        openAppSettings();
-      }
+    if (isJailbroken || isSignatureValid == false || isDeveloperMode) {
+      Navigator.pushReplacementNamed(context, "404");
+    } else {
+      await start();
     }
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      requestPermissions();
-      start();
-    });
+    setState(() {});
   }
 
   @override
@@ -92,7 +92,7 @@ class _MiddlewareState extends State<Middleware> {
                 'lib/assets/loading.gif',
                 scale: 1,
               ),
-            ),
+            )
           ],
         ),
       ),

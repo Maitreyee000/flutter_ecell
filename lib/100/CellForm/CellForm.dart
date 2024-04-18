@@ -111,7 +111,7 @@ class _CellFormState extends State<CellForm> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
-                            var support = await Support.instance;
+                            var support = await Support.init();
                             String? uuid = await support.getString('uuid');
                             var data = {
                               "cell_id": cell_no.text.toString(),

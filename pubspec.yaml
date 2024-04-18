@@ -53,6 +53,9 @@ dependencies:
   image_watermark: ^0.0.5
   image: 3.3.0
   external_path: ^1.0.3
+  flutter_secure_storage: ^4.2.1
+  flutter_jailbreak_detection: ^1.10.0
+  package_info: ^2.0.2
 
 dev_dependencies:
   flutter_test:

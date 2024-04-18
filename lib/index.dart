@@ -13,6 +13,7 @@ export 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 export 'dart:async';
 export 'package:rflutter_alert/rflutter_alert.dart';
 export 'package:image_watermark/image_watermark.dart';
+export 'package:flutter_secure_storage/flutter_secure_storage.dart';
 //dir
 export './Helper/ApiController.dart';
 
@@ -23,3 +24,4 @@ export 'middleware.dart';
 export 'auth/login.dart';
 export './Helper/route.dart';
 export 'package:path_provider/path_provider.dart';
+export 'package:flutter_jailbreak_detection/flutter_jailbreak_detection.dart';

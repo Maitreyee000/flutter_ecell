@@ -35,8 +35,8 @@ class _CellFormState extends State<RequirementsForm> {
 
   Future<void> downloadPDF(Map<String, dynamic> data, String endpoint) async {
     final String pdfDownloadUrl =
-        '${Miscellaneous().getAddress()}/100/pdf/$endpoint';
-    var support = await Support.instance;
+        '${Miscellaneous().getAddress()}/pdf/$endpoint';
+    var support = await Support.init();
     String? token = await support.getString('token');
     EasyLoading.show(status: "Downloading....");
 
@@ -231,7 +231,7 @@ class _CellFormState extends State<RequirementsForm> {
                                 );
                               } else if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-                                var support = await Support.instance;
+                                var support = await Support.init();
                                 String? uuid = await support.getString('uuid');
                                 var data = {
                                   'start': DateFormat('yyyy-MM-dd')
@@ -261,7 +261,7 @@ class _CellFormState extends State<RequirementsForm> {
                                   ),
                                 );
                               } else {
-                                var support = await Support.instance;
+                                var support = await Support.init();
                                 String? uuid = await support.getString('uuid');
                                 var data = {
                                   'start': DateFormat('yyyy-MM-dd')
@@ -334,7 +334,7 @@ class _CellFormState extends State<RequirementsForm> {
                                 );
                               } else if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-                                var support = await Support.instance;
+                                var support = await Support.init();
                                 String? uuid = await support.getString('uuid');
                                 var data = {
                                   'start': DateFormat('yyyy-MM-dd')
@@ -364,7 +364,7 @@ class _CellFormState extends State<RequirementsForm> {
                                   ),
                                 );
                               } else {
-                                var support = await Support.instance;
+                                var support = await Support.init();
                                 String? uuid = await support.getString('uuid');
                                 var data = {
                                   'start': DateFormat('yyyy-MM-dd')

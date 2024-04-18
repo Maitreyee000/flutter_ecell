@@ -1,5 +1,7 @@
 // route.dart
 
+import 'package:cell_req/root_error_page.dart';
+
 import '../index.dart';
 import '../100/Helper/middleware.dart' as m_100;
 import '../200/Helper/middleware.dart' as m_200;
@@ -14,6 +16,9 @@ class RouteManager {
         return MaterialPageRoute(builder: (context) => m_200.Middleware());
       case '300':
         return MaterialPageRoute(builder: (context) => m_300.Middleware());
+
+      case '404':
+        return MaterialPageRoute(builder: (context) => RootPage());
       default:
         return MaterialPageRoute(builder: (context) => Login());
     }

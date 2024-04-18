@@ -1,3 +1,5 @@
+import 'package:cell_req/about_us.dart';
+
 import '../300/Helper/index.dart';
 
 class SideBar extends StatefulWidget {
@@ -11,7 +13,7 @@ class _SideBarState extends State<SideBar> {
   var name;
 
   start() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     name = await support.getString('name');
     setState(() {});
   }
@@ -105,6 +107,17 @@ class _SideBarState extends State<SideBar> {
               onTap: () => index_redirect(context, () => Home()),
             ),
             Divider(),
+            ListTile(
+              title: Text(
+                'About Us',
+                style: _drawListTile(),
+              ),
+              leading: Icon(
+                Icons.info,
+                color: _iconColorDrawer(),
+              ),
+              onTap: () => index_redirect(context, () => AboutUs()),
+            ),
             ListTile(
               title: Text(
                 'Logout',

@@ -92,7 +92,7 @@ class _ApiListDisposeState extends State<ApiListDispose> {
         child: details == null || details!.isEmpty
             ? Center(
                 child: Text(
-                  "No Data Avalable",
+                  "No Data Available",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               )

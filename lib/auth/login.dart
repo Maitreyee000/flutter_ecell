@@ -15,19 +15,19 @@ class _LoginState extends State<Login> {
   final customForm = CustomForm(); //defined in widgets.dart
   final validator = Validator();
   var sel_user_role;
-  var user_role = [
-    {"opt_id": "200", "opt_name": "Nodal Officer"},
-    {"opt_id": "300", "opt_name": "Sveep User"},
-    {"opt_id": "100", "opt_name": "Admin"}
-  ];
+  // var user_role = [
+  //   {"opt_id": "200", "opt_name": "Nodal Officer"},
+  //   {"opt_id": "300", "opt_name": "Sveep User"},
+  //   {"opt_id": "100", "opt_name": "Admin"}
+  // ];
 
   @override
   void initState() {
     super.initState();
 
-    if (user_role.isNotEmpty) {
-      sel_user_role = user_role.first['opt_id'].toString();
-    }
+    // if (user_role.isNotEmpty) {
+    //   sel_user_role = user_role.first['opt_id'].toString();
+    // }
   }
 
   @override
@@ -42,40 +42,57 @@ class _LoginState extends State<Login> {
           Stack(
             children: [
               Container(
-                color: Color(0xff112948),
+                color: Colors.white,
                 width: width,
-                height: height * 0.3,
+                height: height * 0.4,
               ),
-              SizedBox(
-                child: Transform.rotate(
-                  angle: 3.14159 / 4, // Rotating 45 degrees
-                  child: Container(
-                    margin:
-                        EdgeInsets.only(top: height * 0.22, left: width * 0.37),
-                    color: Color(0xff112948),
-                    width: width * 0.1,
-                    height: height * 0.07,
-                  ),
-                ),
+              Container(
+                width: width,
+                height: height * 0.06,
+                margin: EdgeInsets.only(top: height * 0.35),
+                color: Color(0xff112948),
               ),
               Center(
                 child: Column(
                   children: [
                     Container(
-                        margin: EdgeInsets.only(top: height * 0.05),
-                        child: Image.asset(
-                          'lib/assets/ashok.png',
-                          scale: 7,
-                        )),
-                    SizedBox(height: height * 0.01),
-                    Text(
-                      "Cell Requirement System",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold),
+                      width: width,
+                      height: height * 0.07,
+                      color: Color(0xff112948),
                     ),
+                    Container(
+                        child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(left: width * 0.2),
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                  'lib/assets/ashok.png',
+                                  scale: 6,
+                                )),
+                            Container(
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                'lib/assets/sesa.png',
+                                scale: 2.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "Cell Requirement System",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Color(0xff112948),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )),
+                    SizedBox(height: height * 0.01),
                   ],
                 ),
               ),
@@ -93,13 +110,17 @@ class _LoginState extends State<Login> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Welcome",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Text(
+                            "Welcome",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                       Text(
                         "Please Login to your Account",
@@ -110,46 +131,14 @@ class _LoginState extends State<Login> {
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: height * 0.02),
-                      customForm!.dropDown(
-                        //what is custom form doing though?
-                        "  Select User Type",
-                        "Select",
-                        (value) {
-                          sel_user_role = value;
-                          setState(() {});
-                        },
-                        width: width * 0.9,
-                        mappedData: user_role,
-                        initialValue: sel_user_role,
+                      customForm.textFormField(
+                        field_name: "Phone",
+                        controller: uuid,
+                        maxLength: 10,
+                        keyboardType: TextInputType.phone,
+                        customValidator: validator.validatePhone,
                       ),
                       SizedBox(height: height * 0.01),
-                      if (sel_user_role == "100") ...[
-                        customForm.textFormField(
-                          field_name: "Phone",
-                          controller: uuid,
-                          maxLength: 10,
-                          keyboardType: TextInputType.phone,
-                          customValidator: validator.validatePhone,
-                        ),
-                      ],
-                      if (sel_user_role == "200") ...[
-                        customForm.textFormField(
-                          field_name: "Phone",
-                          controller: uuid,
-                          keyboardType: TextInputType.phone,
-                          maxLength: 10,
-                          customValidator: validator.validatePhone,
-                        ),
-                      ],
-                      if (sel_user_role == "300") ...[
-                        customForm.textFormField(
-                          field_name: "Phone",
-                          controller: uuid,
-                          keyboardType: TextInputType.phone,
-                          maxLength: 10,
-                          customValidator: validator.validatePhone,
-                        ),
-                      ],
                       customForm.textFormField(
                         field_name: "Password",
                         customValidator: validator.validatePassword,
@@ -175,11 +164,8 @@ class _LoginState extends State<Login> {
                             width: 30,
                             onPressed: () {
                               ApiControllerMain()
-                                  .login(
-                                      uuid.text.toString(),
-                                      password.text.toString(),
-                                      sel_user_role.toString(),
-                                      context)
+                                  .login(uuid.text.toString(),
+                                      password.text.toString(), context)
                                   .then((result) {
                                 if (result.item1) {
                                   var statusCode =
@@ -187,7 +173,6 @@ class _LoginState extends State<Login> {
                                   var token = result.item2!["token"];
                                   var name = result.item2!["name"];
                                   var cell_name = result.item2!["cell_name"];
-
                                   Support.instance.then((support) {
                                     support.setString(
                                         "uuid", uuid.text.toString());
@@ -198,7 +183,6 @@ class _LoginState extends State<Login> {
                                     support.setString(
                                         'cell_name', cell_name.toString());
                                   });
-
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(

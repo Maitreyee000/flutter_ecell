@@ -9,27 +9,38 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   final customForm = CustomForm();
+  final validator = Validator();
   final name = TextEditingController();
   final phone = TextEditingController();
   final designation = TextEditingController();
+  final password = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
   var user_name;
   var uuid;
   var response;
+  bool isPasswordVisible = false; // Initially password is not visible
+  void togglePasswordVisibility() {
+    setState(() {
+      isPasswordVisible = !isPasswordVisible;
+    });
+  }
+
   final apiController = ApiController();
 
   Future<void> loadData() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     user_name = await support.getString('name');
-    // uuid = await support.getString('uuid');
-    // var data = {"uuid": uuid};
-    // response =
-    //     await apiController.getDataListById(context, "getProfileData", data);
-
+    uuid = await support.getString('uuid');
+    var payload = {"phone": uuid.toString()};
+    EasyLoading.show(status: "Loading...");
+    var data =
+        await apiController.getDataMapById(context, "get_admin_data", payload);
     setState(() {
-      // name.text = response!['name'].toString();
-      // phone.text = response!['phone'].toString();
-      // designation.text = response!['designation'].toString();
+      name.text = data!['name'].toString();
+      phone.text = data!['phone'].toString();
     });
+    EasyLoading.dismiss();
   }
 
   @override
@@ -58,8 +69,8 @@ class _UserProfileState extends State<UserProfile> {
           color: Colors.white,
           icon: Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () {
-            // Navigator.of(context)
-            //     .push(MaterialPageRoute(builder: (context) => Home()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Home()));
           },
         ),
       ),
@@ -95,32 +106,31 @@ class _UserProfileState extends State<UserProfile> {
                   SizedBox(
                     height: height * 0.03,
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Color(0xff112948),
-                      ),
-                      // Define the shape and outline
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(
-                              width: 3,
-                              color: Colors.white), // Outline color set here
-                        ),
-                      ),
-                    ),
-                    onPressed:
-                        null, // Replace null with your function for the button action
-                    child: Text(
-                      "LOG-OUT",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
+                  // ElevatedButton(
+                  //   style: ButtonStyle(
+                  //     backgroundColor: MaterialStateProperty.all(
+                  //       Color(0xff112948),
+                  //     ),
+                  //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //       RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(10.0),
+                  //         side: BorderSide(
+                  //             width: 3,
+                  //             color: Colors.white), // Outline color set here
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   onPressed:
+                  //       null, // Replace null with your function for the button action
+                  //   child: Text(
+                  //     "LOG-OUT",
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 16,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -128,58 +138,89 @@ class _UserProfileState extends State<UserProfile> {
               height: 50,
             ),
             Container(
-              child: Column(
-                children: [
-                  customForm.textFormField(
-                    readOnly: true,
-                    field_name: "Name",
-                    controller: name,
-                    // customValidator: validator.validateText
-                  ),
-                  customForm.textFormField(
-                    readOnly: true,
-                    field_name: "Phone",
-                    controller: phone,
-                    // customValidator: validator.validateText
-                  ),
-                  customForm.textFormField(
-                    readOnly: true,
-                    field_name: "Designation",
-                    controller: designation,
-                    // customValidator: validator.validateText
-                  ),
-                  SizedBox(
-                    width: width * 0.8,
-                    height: height * 0.066,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          Colors.white,
-                        ),
-                        // Define the shape and outline
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(
-                                width: 1,
-                                color: Colors.black), // Outline color set here
-                          ),
-                        ),
-                      ),
-                      onPressed:
-                          null, // Replace null with your function for the button action
-                      child: Text(
-                        "Change Password",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    customForm.textFormField(
+                        field_name: "Name",
+                        controller: name,
+                        customValidator: validator.validateText),
+                    customForm.textFormField(
+                        maxLength: 10,
+                        field_name: "Phone (Login ID)",
+                        controller: phone,
+                        customValidator: validator.validatePhone),
+                    Header(
+                      headerTitle: "Change Password",
+                      color: Color.fromARGB(255, 63, 81, 181),
+                      radius: 10,
+                      textFontSize: 18,
+                      textWeight: FontWeight.bold,
                     ),
-                  )
-                ],
+                    customForm.textFormField(
+                        isRequired: false,
+                        field_name: "Change Password",
+                        controller: password,
+                        keyboardType: TextInputType.text,
+                        isPassword: true,
+                        isPasswordVisible:
+                            isPasswordVisible, // Use the visibility state
+                        togglePasswordVisibility: () {
+                          setState(() {
+                            isPasswordVisible = !isPasswordVisible;
+                          });
+                        },
+                        customValidator: validator.validatePassword),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: CustomElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              Map<String, dynamic> formData = {};
+                              var support = await Support.init();
+                              String? uuid = await support.getString('uuid');
+                              String? user_name =
+                                  await support.getString('name');
+                              formData = {
+                                "name": name.text.trim().toString(),
+                                "new_number": phone.text.trim().toString(),
+                                "old_number": uuid!.trim().toString(),
+                                "password": password.text.trim().toString(),
+                                "iv": "",
+                              };
+                              if (await apiController.uploadData(
+                                  formData, "admin_update", context)) {
+                                Logout.logoutFun();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('User Updated'),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: const Text('Session Expied'),
+                                    duration: const Duration(seconds: 2),
+                                  ),
+                                );
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Login()),
+                                );
+                              }
+                            }
+                          },
+                          color: Colors.green,
+                          height: 5,
+                          width: 25,
+                          radius: 10,
+                          buttonText: "Update"),
+                    )
+                  ],
+                ),
               ),
             )
           ],

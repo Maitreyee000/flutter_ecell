@@ -8,8 +8,8 @@ class ApiControllerMain {
 
   static String get staging => _staging;
 
-  Future<Tuple2<bool, dynamic?>> login(String phone, String password,
-      String user_role, BuildContext context) async {
+  Future<Tuple2<bool, dynamic?>> login(
+      String phone, String password, BuildContext context) async {
     EasyLoading.show(status: 'loading...');
     try {
       final apiUrl = Uri.parse("${_staging}/login");
@@ -20,14 +20,7 @@ class ApiControllerMain {
 
       final encryptedPhone = encrypted.encrypt(phone, iv: iv);
       final encryptedPassword = encrypted.encrypt(password, iv: iv);
-      print(
-        jsonEncode({
-          'phone': encryptedPhone.base64,
-          'password': encryptedPassword.base64,
-          'role_id': user_role,
-          'iv': iv.base64,
-        }),
-      );
+
       final response = await http
           .post(
         apiUrl,
@@ -35,7 +28,6 @@ class ApiControllerMain {
         body: jsonEncode({
           'phone': encryptedPhone.base64,
           'password': encryptedPassword.base64,
-          'role_id': user_role,
           'iv': iv.base64,
         }),
       )
@@ -45,7 +37,7 @@ class ApiControllerMain {
             "Login request took too long. Please try again.");
       });
       var body = jsonDecode(response.body);
-
+      // print(body);
       if (response.statusCode == 200) {
         if (body['status'] == 'Token is Invalid' ||
             body['status'] == 'Token is Expired' ||
@@ -60,7 +52,7 @@ class ApiControllerMain {
           return Tuple2(true, body);
         }
       }
-      print(body);
+      // print(body);
       EasyLoading.showError(body["msg"].toString(),
           duration: Duration(seconds: 2));
       return Tuple2(false, null);
@@ -75,7 +67,7 @@ class ApiControllerMain {
   }
 
   Future<bool> fetchDataAndStore(String url, String fileName) async {
-    var _support = await Support.instance;
+    var _support = await Support.init();
     String? _token = await _support.getString('token');
 
     try {

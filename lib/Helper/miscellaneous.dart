@@ -1,39 +1,90 @@
 import '../index.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:package_info/package_info.dart';
 
 class Support {
   static Support? _instance;
-  static SharedPreferences? _prefs; //to access shared preferences
-
-  Support._(); // Private constructor
+  static final FlutterSecureStorage _secureStorage =
+      const FlutterSecureStorage();
+  static late encrypt.Encrypter _encrypter;
+  static late encrypt.Key _key;
+  static final _iv = encrypt.IV.fromLength(16);
+  static bool _isInitialized = false;
+  static bool _isKeyGenerated = false;
+  Support._();
 
   static Future<Support> get instance async {
-    _instance ??= Support._(); // Create a new instance if it's null
-    await _initPrefs(); // Initialize SharedPreferences
+    _instance ??= Support._();
+    await _initEncryption();
     return _instance!;
   }
 
-  static Future<void> _initPrefs() async {
-    _prefs ??= await SharedPreferences.getInstance();
+  static Future<Support> init() async {
+    if (_instance == null) {
+      _instance = Support._();
+      if (!_isInitialized) {
+        await _initEncryption();
+        _isInitialized = true;
+      }
+    }
+    return _instance!;
   }
 
-  Future<void> setBool(String varName, bool value) async {
-    await _prefs?.setBool(varName, value);
+  static Future<void> _initEncryption() async {
+    _key = encrypt.Key.fromBase64(Miscellaneous().getKey());
+    _encrypter = encrypt.Encrypter(encrypt.AES(_key));
+  }
+
+  static void _generateKey() {
+    if (!_isKeyGenerated) {
+      _isKeyGenerated = true;
+    }
   }
 
   Future<void> setString(String varName, String varValue) async {
-    await _prefs?.setString(varName, varValue);
+    final encryptedValue = _encrypt(varValue); // Always encrypt
+    await _secureStorage.write(key: varName, value: encryptedValue);
+  }
+
+  Future<void> setBool(String varName, bool value) async {
+    final encryptedValue =
+        _encrypt(value.toString()); // Convert bool to string and encrypt
+    await _secureStorage.write(key: varName, value: encryptedValue);
   }
 
   Future<String?> getString(String varName) async {
-    return _prefs?.getString(varName);
-  }
-
-  Future<void> remove(String varName) async {
-    await _prefs?.remove(varName);
+    final storedValue = await _secureStorage.read(key: varName);
+    if (storedValue == null) return null;
+    return _decrypt(storedValue); // Always decrypt
   }
 
   Future<bool?> getBool(String varName) async {
-    return _prefs?.getBool(varName);
+    String? encryptedValue = await _secureStorage.read(key: varName);
+    if (encryptedValue == null) return null;
+    final decryptedValue = _decrypt(encryptedValue); // Decrypt and then parse
+    return decryptedValue.toLowerCase() == 'true';
+  }
+
+  String _encrypt(String value) {
+    final encrypted = _encrypter!.encrypt(value, iv: _iv);
+    return encrypted.base64;
+  }
+
+  String _decrypt(String value) {
+    try {
+      final decrypted =
+          _encrypter!.decrypt(encrypt.Encrypted.fromBase64(value), iv: _iv);
+      return decrypted;
+    } catch (e) {
+      // Handle decryption error
+      // print('Error decrypting value: $e');
+      return ''; // Return an empty string or handle appropriately
+    }
+  }
+
+  // Remove a value
+  Future<void> remove(String varName) async {
+    await _secureStorage.delete(key: varName);
   }
 }
 
@@ -76,14 +127,14 @@ class FileManager {
         }
       }
     } catch (e) {
-      print('An error occurred while deleting the files: $e');
+      // print('An error occurred while deleting the files: $e');
     }
   }
 }
 
 class Logout {
   static Future<void> logoutFun() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     await support.remove('token');
     await support.remove("uuid");
     await support.remove("id");
@@ -124,6 +175,23 @@ class Logout {
         ),
       ],
     ).show();
+  }
+}
+
+class PlatformService {
+  static const MethodChannel _channel =
+      MethodChannel('com.example.cell_req/signature');
+
+  static Future<String?> getAppSignature() async {
+    final String? appSignature = await _channel.invokeMethod('getAppSignature');
+    return appSignature;
+  }
+
+  static Future<bool> checkAppSignature() async {
+    final bool isSignatureValid =
+        await _channel.invokeMethod('checkAppSignature');
+
+    return isSignatureValid;
   }
 }
 
@@ -231,7 +299,8 @@ class Miscellaneous {
   getAddress() {
     // return "http://192.168.137.84:5000/api";
     // return "http://10.177.15.135/cell-requirement-system/public/api";
-    return "http://10.177.15.121/ep_project/ecell_system/public/api";
+    // return "http://10.177.15.121/ep_project/prayukti-sewa/public/api/ecell";
+    return "https://eprayuktisewa.assam.gov.in/api/ecell";
   }
 
   getKey() {

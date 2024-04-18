@@ -1,3 +1,4 @@
+import 'package:cell_req/100/RegistrationForm/RegistrationFormHome.dart';
 import 'package:cell_req/100/RegistrationForm/ViewDetails/api_details.dart';
 
 import '../../Helper/index.dart';
@@ -19,7 +20,7 @@ class _ApiDataListState extends State<ApiDataList> {
   TextStyle kTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 15);
 
   Future<void> loadInitialData() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     var uuid = await support.getString("uuid");
     var data = {"phone": uuid.toString()};
 
@@ -67,7 +68,11 @@ class _ApiDataListState extends State<ApiDataList> {
                 color: Colors.white,
               ),
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RegistrationFormHome()),
+                );
               },
             ),
           ),
@@ -93,7 +98,10 @@ class _ApiDataListState extends State<ApiDataList> {
             color: Colors.white,
           ),
           onTap: () {
-            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RegistrationFormHome()),
+            );
           },
         ),
       ),
@@ -101,7 +109,7 @@ class _ApiDataListState extends State<ApiDataList> {
         child: details == null || details!.isEmpty
             ? Center(
                 child: Text(
-                  "No Data Avalable",
+                  "No Data Available",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               )

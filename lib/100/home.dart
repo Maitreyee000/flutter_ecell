@@ -2,6 +2,7 @@ import 'package:cell_req/100/CellForm/CellFormHome.dart';
 import 'package:cell_req/100/RegistrationForm/RegistrationFormHome.dart';
 import 'package:cell_req/100/ReportGeneration/RequirementsForm.dart';
 import 'package:cell_req/100/SveepForm/SveepFormHome.dart';
+import 'package:cell_req/100/user_profile.dart';
 
 import '/100/Helper/index.dart';
 
@@ -18,7 +19,7 @@ class _HomeState extends State<Home> {
   double curSlide = 1;
   List slides = [1, 2, 3];
   Future<void> loadData() async {
-    var support = await Support.instance;
+    var support = await Support.init();
     name = await support.getString('name');
     setState(() {});
   }
@@ -111,39 +112,61 @@ class _HomeState extends State<Home> {
               ],
             ),
             Container(
-              width: width,
-              child: Center(
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    onPageChanged: (value, reason) {
-                      setState(() {
-                        curSlide = value.toDouble();
-                      });
-                    },
-                    height: MediaQuery.of(context).size.height * .22,
-                    viewportFraction: 1,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 4),
-                    autoPlayAnimationDuration: const Duration(seconds: 2),
-                    autoPlayCurve: Curves.ease,
-                    enlargeCenterPage: true,
+              width: width * 0.7,
+              height: height * 0.27,
+              margin: const EdgeInsets.only(right: 15, left: 15),
+              decoration: BoxDecoration(
+                color: Color(0xFF1a434d),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Image.asset(
+                      'lib/assets/ashok.png',
+                      scale: 8,
+                    ),
                   ),
-                  items: slides.map((i) {
-                    return Image.asset(
-                      "lib/assets/slide-$i.jpg",
-                      fit: BoxFit.cover, // This line was changed
-                    );
-                  }).toList(),
-                ),
+                  Container(
+                      margin: EdgeInsets.only(
+                        top: 5,
+                      ),
+                      child: Text(
+                        '${name}',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomElevatedButton(
+                        color: const Color.fromARGB(255, 59, 72, 149),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserProfile()));
+                        },
+                        radius: 10,
+                        height: 4,
+                        width: 30,
+                        buttonText: "View Profile"),
+                  )
+                ],
               ),
             ),
             Container(
               child: Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    margin: EdgeInsets.symmetric(
+                        vertical: height * 0.02, horizontal: width * 0.05),
                     alignment: Alignment.topCenter,
-                    color: Color(0xff015495),
+                    decoration: BoxDecoration(
+                        color: Color(0xff015495),
+                        borderRadius: BorderRadius.circular(10)),
                     height: 100,
                     child: Container(
                       margin: const EdgeInsets.all(20),
@@ -158,7 +181,8 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+                    margin: EdgeInsets.symmetric(
+                        vertical: height * 0.08, horizontal: width * 0.05),
                     height: (height * 0.12) * (items.length / 3).ceil(),
                     decoration: BoxDecoration(
                         color: Colors.black,

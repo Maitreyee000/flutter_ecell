@@ -20,10 +20,21 @@ class _SveepFormState extends State<SveepForm> {
   double? long;
   dynamic image;
   bool isImageSelected = false;
+
+  Future<void> requestPermissions() async {
+    var status = await Permission.location.request();
+
+    if (status == PermissionStatus.granted) {
+    } else if (status == PermissionStatus.denied) {
+    } else if (status == PermissionStatus.permanentlyDenied) {
+      openAppSettings();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    // Set initial value for sel_user_role based on the first item in user_role list
+    requestPermissions();
   }
 
   @override
@@ -144,7 +155,7 @@ class _SveepFormState extends State<SveepForm> {
                       }
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        var support = await Support.instance;
+                        var support = await Support.init();
                         String? uuid = await support.getString('uuid');
 
                         // Assuming imagePath is available here and it's a String
