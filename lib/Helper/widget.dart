@@ -1141,91 +1141,113 @@ class CustomForm {
   }
 
 //!! imageFieldBase64
-  TableRow imageFieldBase64({
-    required String field_name,
-    required String base64Image,
-    required BuildContext
-        context, // Add BuildContext parameter to use showDialog function
+  TableRow tableRowFieldBase64({
+    required String fieldName,
+    required String base64Data,
+    required BuildContext context,
+    required String fileType,
   }) {
+    Widget? fieldValueWidget;
+
     try {
-      Uint8List bytes = base64Decode(base64Image);
-      Widget fieldValueWidget = GestureDetector(
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Image.memory(
-                    bytes,
-                    fit: BoxFit.cover,
+      Uint8List bytes = base64Decode(base64Data);
+      if (fileType == 'image') {
+        fieldValueWidget = GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Image.memory(
+                      bytes,
+                      fit: BoxFit.cover,
+                    ),
                   ),
+                );
+              },
+            );
+          },
+          child: Image.memory(
+            bytes,
+            fit: BoxFit.cover,
+          ),
+        );
+      } else if (fileType == 'pdf') {
+        // Save the PDF to a temporary file and then use the file path
+        fieldValueWidget = FutureBuilder<String>(
+          future: _saveFile(bytes, 'tempPDF.pdf'),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          child: PDFView(
+                            filePath: snapshot.data,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text(
+                  'Open PDF',
+                  style: TextStyle(
+                      color: Colors.blue, decoration: TextDecoration.underline),
                 ),
               );
-            },
-          );
-        },
-        child: Image.memory(
-          bytes,
-          fit: BoxFit.cover,
-        ),
-      );
-
-      return TableRow(children: [
-        TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                field_name,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ),
-        TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: fieldValueWidget,
-            ),
-          ),
-        ),
-      ]);
+            } else if (snapshot.hasError) {
+              return Text('Error loading PDF');
+            }
+            return CircularProgressIndicator();
+          },
+        );
+      }
     } catch (e) {
-      // print('Error decoding base64 image: $e');
-      return TableRow(children: [
-        TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                field_name,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ),
-        TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                'Invalid Image',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
-        ),
-      ]);
+      fieldValueWidget = Text(
+        'Invalid Data',
+        style: TextStyle(fontSize: 16),
+      );
     }
+
+    return TableRow(children: [
+      TableCell(
+        verticalAlignment: TableCellVerticalAlignment.middle,
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              fieldName,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ),
+      TableCell(
+        verticalAlignment: TableCellVerticalAlignment.middle,
+        child: Center(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: fieldValueWidget,
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  Future<String> _saveFile(Uint8List bytes, String filename) async {
+    Directory tempDir = await getTemporaryDirectory();
+    String filePath = '${tempDir.path}/$filename';
+    File file = File(filePath);
+    await file.writeAsBytes(bytes);
+    return filePath;
   }
 
   TableRow radioButtonFieldGroup({

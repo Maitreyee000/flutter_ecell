@@ -14,6 +14,8 @@ export 'dart:async';
 export 'package:rflutter_alert/rflutter_alert.dart';
 export 'package:image_watermark/image_watermark.dart';
 export 'package:flutter_secure_storage/flutter_secure_storage.dart';
+export 'package:flutter_pdfview/flutter_pdfview.dart';
+
 //dir
 export './Helper/ApiController.dart';
 

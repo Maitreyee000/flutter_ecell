@@ -77,7 +77,7 @@ class _LoginState extends State<Login> {
                               alignment: Alignment.center,
                               child: Image.asset(
                                 'lib/assets/sesa.png',
-                                scale: 2.4,
+                                scale: 2.75,
                               ),
                             ),
                           ],
