@@ -110,14 +110,14 @@ class _ApiDetailsState extends State<ApiDetails> {
                             customValidator: validator.validateText,
                             keyboardType: TextInputType.text,
                           ),
-                          customForm.textFormField(
-                            readOnly: true,
-                            maxLength: 10,
-                            field_name: "Phone",
-                            controller: phone,
-                            customValidator: validator.validatePhone,
-                            keyboardType: TextInputType.phone,
-                          ),
+                          // customForm.textFormField(
+                          //   readOnly: true,
+                          //   maxLength: 10,
+                          //   field_name: "Phone",
+                          //   controller: phone,
+                          //   customValidator: validator.validatePhone,
+                          //   keyboardType: TextInputType.phone,
+                          // ),
                           customForm.tableSection(children: [
                             customForm.tableRowFieldBase64(
                                 fieldName: "Pdf",

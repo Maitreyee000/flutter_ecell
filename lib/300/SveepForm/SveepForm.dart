@@ -106,13 +106,13 @@ class _SveepFormState extends State<SveepForm> {
                     keyboardType: TextInputType.text,
                     customValidator: validator.validateAlphaNum,
                   ),
-                  customForm.textFormField(
-                    field_name: "Contact No.",
-                    maxLength: 10,
-                    controller: c_no,
-                    keyboardType: TextInputType.phone,
-                    customValidator: validator.validatePhone,
-                  ),
+                  // customForm.textFormField(
+                  //   field_name: "Contact No.",
+                  //   maxLength: 10,
+                  //   controller: c_no,
+                  //   keyboardType: TextInputType.phone,
+                  //   customValidator: validator.validatePhone,
+                  // ),
                   customForm.tableSection(children: [
                     customForm.imageField(
                       field_name: "Photo",
@@ -166,7 +166,7 @@ class _SveepFormState extends State<SveepForm> {
 
                         var data = {
                           "name": name.text.toString(),
-                          "contact_no": c_no.text.toString(),
+                          // "contact_no": c_no.text.toString(),
                           "latitude": lat.toString(),
                           "longitude": long
                               .toString(), // Make sure to use 'long' for longitude
@@ -176,7 +176,6 @@ class _SveepFormState extends State<SveepForm> {
                               base64Image, // Add the base64 image string here
                         };
 
-                        // Consider extracting the following call into a separate method
                         bool result = await apiController.uploadData(
                             data, "createSveepDetail", context);
                         if (result) {

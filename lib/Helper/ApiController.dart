@@ -37,7 +37,6 @@ class ApiControllerMain {
             "Login request took too long. Please try again.");
       });
       var body = jsonDecode(response.body);
-      // print(body);
       if (response.statusCode == 200) {
         if (body['status'] == 'Token is Invalid' ||
             body['status'] == 'Token is Expired' ||
@@ -52,7 +51,6 @@ class ApiControllerMain {
           return Tuple2(true, body);
         }
       }
-      // print(body);
       EasyLoading.showError(body["msg"].toString(),
           duration: Duration(seconds: 2));
       return Tuple2(false, null);
