@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
                           ],
                         ),
                         Text(
-                          "Cell Requirement System",
+                          "Election Cell Requirement System",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: Color(0xff112948),
@@ -156,81 +156,70 @@ class _LoginState extends State<Login> {
                         keyboardType: TextInputType
                             .visiblePassword, // Set keyboard type for passwords
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Terms and Conditions'),
-                                    content: const SingleChildScrollView(
-                                      child: ListBody(
-                                        children: <Widget>[
-                                          Text('1. Introduction\n\n'
-                                              'Welcome to our application. By accessing or using our application, you agree to be bound by these terms and conditions. If you do not agree with any part of these terms, you are prohibited from using or accessing this application.\n\n'
-                                              '2. Intellectual Property Rights\n\n'
-                                              'Under these Terms, [Your Company Name] and/or its licensors own all the intellectual property rights and materials contained in this application. You are granted a limited license only for purposes of viewing the material contained on this application.\n\n'
-                                              '3. Restrictions\n\n'
-                                              'You are specifically restricted from all of the following:\n'
-                                              '- publishing any application material in any other media;\n'
-                                              '- selling, sublicensing, and/or otherwise commercializing any application material;\n'
-                                              '- publicly performing and/or showing any application material;\n'
-                                              '- using this application in any way that is or may be damaging to this application;\n'
-                                              '- using this application in any way that impacts user access to this application;\n'
-                                              '- using this application contrary to applicable laws and regulations, or in a way that causes, or may cause, harm to the application, or to any person or business entity;\n'
-                                              '- engaging in any data mining, data harvesting, data extracting, or any other similar activity in relation to this application, or while using this application.\n\n'
-                                              '4. Your Content\n\n'
-                                              'In these terms and conditions, "Your Content" shall mean any audio, video, text, images, or other material you choose to display on this application. By displaying Your Content, you grant [Your Company Name] a non-exclusive, worldwide, irrevocable, sublicensable license to use, reproduce, adapt, publish, translate, and distribute it in any and all media.\n\n'
-                                              'Your Content must be your own and must not be infringing on any third party\'s rights. [Your Company Name] reserves the right to remove any of Your Content from this application at any time, and for any reason, without notice.\n\n'
-                                              '5. No warranties\n\n'
-                                              'This application is provided "as is," with all faults, and [Your Company Name] makes no express or implied representations or warranties, of any kind related to this application or the materials contained on this application. Also, nothing contained on this application shall be interpreted as advising you.\n\n'
-                                              '6. Limitation of liability\n\n'
-                                              'In no event shall [Your Company Name], nor any of its officers, directors, and employees, be held liable for anything arising out of or in any way connected with your use of this application whether such liability is under contract, tort or otherwise, and [Your Company Name], including its officers, directors, and employees shall not be liable for any indirect, consequential, or special liability arising out of or in any way related to your use of this application.\n\n'
-                                              '7. Indemnification\n\n'
-                                              'You hereby indemnify to the fullest extent [Your Company Name] from and against any and/or all liabilities, costs, demands, causes of action, damages, and expenses arising in any way related to your breach of any of the provisions of these terms.\n\n'
-                                              '8. Severability\n\n'
-                                              'If any provision of these terms is found to be invalid under any applicable law, such provisions shall be deleted without affecting the remaining provisions herein.\n\n'
-                                              '9. Variation of Terms\n\n'
-                                              '[Your Company Name] is permitted to revise these terms at any time as it sees fit, and by using this application you are expected to review such terms on a regular basis to ensure you understand all terms and conditions governing use of this application.\n\n'
-                                              '10. Assignment\n\n'
-                                              '[Your Company Name] is allowed to assign, transfer, and subcontract its rights and/or obligations under these terms without any notification or consent required. However, you are not allowed to assign, transfer, or subcontract any of your rights and/or obligations under these terms.\n\n'
-                                              '11. Entire Agreement\n\n'
-                                              'These terms constitute the entire agreement between [Your Company Name] and you in relation to your use of this application, and supersede all prior agreements and understandings.\n\n')
-                                        ],
-                                      ),
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: Text('Close'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            child: Text(
-                              "Read and Accept Terms & Conditions",
+                      Container(
+                        margin: EdgeInsets.only(left: width * 0.01),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              value: acceptedTerms,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  acceptedTerms = value!;
+                                });
+                              },
+                            ),
+                            Text(
+                              "I Agree to ",
                               style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Colors.blue,
+                                fontSize: 16,
                               ),
                             ),
-                          ),
-                          Checkbox(
-                            value: acceptedTerms,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                acceptedTerms = value!;
-                              });
-                            },
-                          ),
-                        ],
+                            InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Terms and Conditions'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            Text(
+                                              'Terms of Use\n\n'
+                                              'These terms of use govern your use of Election Cell Requirement System. Please read these terms and conditions (Terms) carefully before you use the Election Cell Requirement System platform and its services. By clicking on the "I Agree" button, you signify your acceptance of the Terms and your agreement to be bound by them. The Terms may be amended from time to time. In order to continue using the Election Cell Requirement System Platform, you will be required to read and accept the revised Terms.\n\n'
+                                              'Though all efforts have been made to ensure the accuracy of the content on Election Cell Requirement System, the same should not be construed as a statement of law or used for any legal purposes. In case of any ambiguity or doubts, users are advised to verify/check with the concerned Ministry/Department/Organization and/or other source(s), and to obtain appropriate professional advice.\n\n'
+                                              'Under no circumstances will the Government Ministry/Department/Organization be liable for any expense, loss or damage including, without limitation, indirect or consequential loss or damage, or any expense, loss or damage whatsoever arising from use, or loss of use, of data, arising out of or in connection with the use of Election Cell Requirement System.\n\n'
+                                              'The service offered by Election Cell Requirement System is for your personal use only and not for commercial exploitation. You may not decompile, reverse engineer, disassemble, rent, lease, loan, sell, sublicense, or create derivative works from Election Cell Requirement System. Nor may you use any network monitoring or discovery software to determine the Application/site architecture, or extract information about usage, individual identities or users.\n\n'
+                                              'Privacy Policy\n\n'
+                                              'Please read this privacy policy before using Election Cell Requirement System. By using the website or submitting the information on the website, you agree that you are of the age of 18 years or above and you specifically consent to the use and transmission/transfer/sharing of your entered data or information according to the privacy policy. You shall be at liberty at any time to discontinue the use / transfer / transmission and sharing of any of your personal data or information, by writing to us and informing us of the same.',
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('Close'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: Text(
+                                "terms of use",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         child: Center(
@@ -294,6 +283,16 @@ class _LoginState extends State<Login> {
                             },
                             radius: 8,
                             textFontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: height * 0.075 ),
+                          child: Text(
+                            "District Election Office, Bijni",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),

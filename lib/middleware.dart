@@ -58,16 +58,15 @@ class _MiddlewareState extends State<Middleware> {
   }
 
   Future<void> checkDeviceSecurity() async {
-    await start();
-    // bool isJailbroken = await FlutterJailbreakDetection.jailbroken;
-    // bool isDeveloperMode = await FlutterJailbreakDetection.developerMode;
-    // bool isSignatureValid = await PlatformService.checkAppSignature();
+    bool isJailbroken = await FlutterJailbreakDetection.jailbroken;
+    bool isDeveloperMode = await FlutterJailbreakDetection.developerMode;
+    bool isSignatureValid = await PlatformService.checkAppSignature();
 
-    // if (isJailbroken || isSignatureValid == false || isDeveloperMode) {
-    //   Navigator.pushReplacementNamed(context, "404");
-    // } else {
-    //   await start();
-    // }
+    if (isJailbroken || isSignatureValid == false || isDeveloperMode) {
+      Navigator.pushReplacementNamed(context, "404");
+    } else {
+      await start();
+    }
 
     setState(() {});
   }
