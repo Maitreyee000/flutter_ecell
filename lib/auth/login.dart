@@ -192,7 +192,7 @@ class _LoginState extends State<Login> {
                                               'Under no circumstances will the Government Ministry/Department/Organization be liable for any expense, loss or damage including, without limitation, indirect or consequential loss or damage, or any expense, loss or damage whatsoever arising from use, or loss of use, of data, arising out of or in connection with the use of Election Cell Requirement System.\n\n'
                                               'The service offered by Election Cell Requirement System is for your personal use only and not for commercial exploitation. You may not decompile, reverse engineer, disassemble, rent, lease, loan, sell, sublicense, or create derivative works from Election Cell Requirement System. Nor may you use any network monitoring or discovery software to determine the Application/site architecture, or extract information about usage, individual identities or users.\n\n'
                                               'Privacy Policy\n\n'
-                                              'Please read this privacy policy before using Election Cell Requirement System. By using the website or submitting the information on the website, you agree that you are of the age of 18 years or above and you specifically consent to the use and transmission/transfer/sharing of your entered data or information according to the privacy policy. You shall be at liberty at any time to discontinue the use / transfer / transmission and sharing of any of your personal data or information, by writing to us and informing us of the same.',
+                                              'Please read this privacy policy before using Election Cell Requirement System. By using the mobile application or submitting the information on the mobile application, you agree that you are of the age of 18 years or above and you specifically consent to the use and transmission/transfer/sharing of your entered data or information according to the privacy policy. You shall be at liberty at any time to discontinue the use / transfer / transmission and sharing of any of your personal data or information, by writing to us and informing us of the same.',
                                             ),
                                           ],
                                         ),
@@ -288,7 +288,7 @@ class _LoginState extends State<Login> {
                       ),
                       Center(
                         child: Container(
-                          margin: EdgeInsets.only(top: height * 0.075 ),
+                          margin: EdgeInsets.only(top: height * 0.075),
                           child: Text(
                             "District Election Office, Bijni",
                             style: TextStyle(
