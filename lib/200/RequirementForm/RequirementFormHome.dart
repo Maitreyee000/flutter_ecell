@@ -168,8 +168,8 @@ class _HomeState extends State<RequirementFormHome> {
 
 deleteData(context) async {
   var support = await Support.init();
-  var uuid = await support.getString('uuid');
-  var data = {"uuid": uuid.toString()};
+  // var uuid = await support.getString('uuid');
+  var data = {"uuid": ""};
   var registrationSuccess =
       await ApiController().uploadData(data, "deleteDataById", context);
 

@@ -31,14 +31,15 @@ class _UserProfileState extends State<UserProfile> {
   Future<void> loadData() async {
     var support = await Support.init();
     user_name = await support.getString('name');
-    uuid = await support.getString('uuid');
-    var payload = {"phone": uuid.toString()};
+    // uuid = await support.getString('uuid');
+    // var payload = {"phone": uuid.toString()};
+    var payload = {"phone": ""};
     EasyLoading.show(status: "Loading...");
     var data =
         await apiController.getDataMapById(context, "get_admin_data", payload);
     setState(() {
       name.text = data!['name'].toString();
-      phone.text = data!['phone'].toString();
+      // phone.text = data!['phone'].toString();
     });
     EasyLoading.dismiss();
   }
@@ -180,13 +181,13 @@ class _UserProfileState extends State<UserProfile> {
                               _formKey.currentState!.save();
                               Map<String, dynamic> formData = {};
                               var support = await Support.init();
-                              String? uuid = await support.getString('uuid');
+                              // String? uuid = await support.getString('uuid');
                               String? user_name =
                                   await support.getString('name');
                               formData = {
                                 "name": name.text.trim().toString(),
                                 "new_number": phone.text.trim().toString(),
-                                "old_number": uuid!.trim().toString(),
+                                // "old_number": uuid!.trim().toString(),
                                 "password": password.text.trim().toString(),
                                 "iv": "",
                               };

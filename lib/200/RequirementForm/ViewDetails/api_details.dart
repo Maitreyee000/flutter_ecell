@@ -208,8 +208,8 @@ class _ApiDetailsState extends State<ApiDetails> {
                                 onPressed: () async {
                                   Map<String, dynamic> formData = {};
                                   var support = await Support.init();
-                                  String? uuid =
-                                      await support.getString('uuid');
+                                  // String? uuid =
+                                  //     await support.getString('uuid');
                                   formData = {
                                     "id": widget.idData.toString(),
                                     "name": name.text.trim().toString(),

@@ -260,8 +260,8 @@ class _LoginState extends State<Login> {
                                     var name = result.item2!["name"];
                                     var cell_name = result.item2!["cell_name"];
                                     Support.instance.then((support) {
-                                      support.setString(
-                                          "uuid", uuid.text.toString());
+                                      // support.setString(
+                                      //     "uuid", uuid.text.toString());
                                       support.setBool("justLoggedIn", true);
                                       support.setString(
                                           "statusCode", statusCode);

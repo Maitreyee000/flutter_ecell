@@ -156,7 +156,7 @@ class _SveepFormState extends State<SveepForm> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         var support = await Support.init();
-                        String? uuid = await support.getString('uuid');
+                        // String? uuid = await support.getString('uuid');
 
                         // Assuming imagePath is available here and it's a String
                         String imagePath =
@@ -171,7 +171,7 @@ class _SveepFormState extends State<SveepForm> {
                           "longitude": long
                               .toString(), // Make sure to use 'long' for longitude
                           "remarks": remark.text.toString(),
-                          "entered_by": uuid.toString(),
+
                           "photo":
                               base64Image, // Add the base64 image string here
                         };

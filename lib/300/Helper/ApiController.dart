@@ -40,7 +40,7 @@ class ApiController {
     var support = await Support.init();
 
     String? token = await support.getString('token');
-    String? uuid = await support.getString('uuid');
+    // String? uuid = await support.getString('uuid');
     String? statusCode = await support.getString('statusCode');
 
     var url = Uri.parse('${ipAddress}/${endpoint}');
@@ -113,7 +113,7 @@ class ApiController {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    // print(jsonEncode(data));
+    print(jsonEncode(data));
     try {
       http.Response response = await http
           .post(
@@ -123,7 +123,7 @@ class ApiController {
           )
           .timeout(const Duration(seconds: 30));
       Map<String, dynamic> responseData = jsonDecode(response.body);
-
+      print(responseData);
       if (response.statusCode == 201 || response.statusCode == 200) {
         Map<String, dynamic> responseData = jsonDecode(response.body);
 
@@ -228,7 +228,7 @@ class ApiController {
     var support = await Support.init();
 
     String? token = await support.getString('token');
-    String? uuid = await support.getString('uuid');
+    // String? uuid = await support.getString('uuid');
     String? statusCode = await support.getString('statusCode');
     var url = Uri.parse('${ipAddress}/$endpoint');
 
@@ -242,7 +242,7 @@ class ApiController {
           .post(url, headers: headers, body: jsonEncode(data))
           .timeout(const Duration(seconds: 20));
       var body = jsonDecode(response.body);
-
+      print(body);
       if (response.statusCode == 200) {
         if (body is Map &&
             (body['status'] == 'Token is Invalid' ||

@@ -22,8 +22,8 @@ class _ApiDataListState extends State<ApiDataList> {
 
   Future<void> loadInitialData() async {
     var support = await Support.init();
-    var uuid = await support.getString("uuid");
-    var data = {"phone": uuid.toString()};
+    // var uuid = await support.getString("uuid");
+    var data = {"phone": ""};
 
     details = await apiController.getDataListById(
         context, "get_register_cell_list", data);
