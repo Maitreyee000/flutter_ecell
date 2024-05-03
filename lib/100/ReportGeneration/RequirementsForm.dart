@@ -232,13 +232,12 @@ class _CellFormState extends State<RequirementsForm> {
                               } else if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 var support = await Support.init();
-                                String? uuid = await support.getString('uuid');
+                                // String? uuid = await support.getString('uuid');
                                 var data = {
                                   'start': DateFormat('yyyy-MM-dd')
                                       .format(startDate!),
                                   'end':
                                       DateFormat('yyyy-MM-dd').format(endDate!),
-                                  'requested_by': uuid.toString(),
                                 };
 
                                 downloadPDF(data, "download_requirement_list");
@@ -262,13 +261,12 @@ class _CellFormState extends State<RequirementsForm> {
                                 );
                               } else {
                                 var support = await Support.init();
-                                String? uuid = await support.getString('uuid');
+                                // String? uuid = await support.getString('uuid');
                                 var data = {
                                   'start': DateFormat('yyyy-MM-dd')
                                       .format(startDate!),
                                   'end':
                                       DateFormat('yyyy-MM-dd').format(endDate!),
-                                  'requested_by': uuid.toString(),
                                 };
                                 Navigator.push(
                                   context,
@@ -335,13 +333,12 @@ class _CellFormState extends State<RequirementsForm> {
                               } else if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 var support = await Support.init();
-                                String? uuid = await support.getString('uuid');
+                                // String? uuid = await support.getString('uuid');
                                 var data = {
                                   'start': DateFormat('yyyy-MM-dd')
                                       .format(startDate2!),
                                   'end': DateFormat('yyyy-MM-dd')
                                       .format(endDate2!),
-                                  'requested_by': uuid.toString(),
                                 };
 
                                 downloadPDF(data, "download_dispose_list");
@@ -365,13 +362,12 @@ class _CellFormState extends State<RequirementsForm> {
                                 );
                               } else {
                                 var support = await Support.init();
-                                String? uuid = await support.getString('uuid');
+                                // String? uuid = await support.getString('uuid');
                                 var data = {
                                   'start': DateFormat('yyyy-MM-dd')
                                       .format(startDate2!),
                                   'end': DateFormat('yyyy-MM-dd')
                                       .format(endDate2!),
-                                  'requested_by': uuid.toString(),
                                 };
 
                                 Navigator.push(

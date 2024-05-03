@@ -19,7 +19,7 @@ class _ApiDetailsState extends State<ApiDetails> {
   final apiController = ApiController();
   bool isLoading = true;
   final name = TextEditingController();
-  final phone = TextEditingController();
+  // final phone = TextEditingController();
   final long = TextEditingController();
   final lat = TextEditingController();
   final remarks = TextEditingController();
@@ -29,18 +29,18 @@ class _ApiDetailsState extends State<ApiDetails> {
   Future<void> loadInitialData() async {
     try {
       var support = await Support.init();
-      var uuid = await support.getString('uuid');
+      // var uuid = await support.getString('uuid');
 
       var payload = {
         "id": widget.idData.toString(),
-        "phone": uuid.toString(),
       };
 
       var response = await apiController.getDataMapById(
           context, "get_all_data_by_id", payload);
+      print(response);
       data = response;
       name.text = data!['name'].toString();
-      phone.text = data!['contact_no'].toString();
+      // phone.text = data!['contact_no'].toString();
       lat.text = data!['latitude'].toString();
       long.text = data!['longitude'].toString();
       remarks.text = data!['remarks'].toString();
@@ -88,7 +88,7 @@ class _ApiDetailsState extends State<ApiDetails> {
             },
           ),
         ),
-        body: data['photo'] == null
+        body: data == null
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Container(
@@ -110,20 +110,20 @@ class _ApiDetailsState extends State<ApiDetails> {
                             customValidator: validator.validateText,
                             keyboardType: TextInputType.text,
                           ),
-                          customForm.textFormField(
-                            readOnly: true,
-                            maxLength: 10,
-                            field_name: "Phone",
-                            controller: phone,
-                            customValidator: validator.validatePhone,
-                            keyboardType: TextInputType.phone,
-                          ),
+                          // customForm.textFormField(
+                          //   readOnly: true,
+                          //   maxLength: 10,
+                          //   field_name: "Phone",
+                          //   controller: phone,
+                          //   customValidator: validator.validatePhone,
+                          //   keyboardType: TextInputType.phone,
+                          // ),
                           customForm.tableSection(children: [
                             customForm.tableRowFieldBase64(
-                                fieldName: "Pdf",
+                                fieldName: "Image",
                                 base64Data: data['photo'],
                                 context: context,
-                                fileType: "pdf"),
+                                fileType: "image"),
                           ]),
                           customForm.textFormField(
                             readOnly: true,

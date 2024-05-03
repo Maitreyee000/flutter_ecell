@@ -40,7 +40,7 @@ class ApiController {
     var support = await Support.init();
 
     String? token = await support.getString('token');
-    String? uuid = await support.getString('uuid');
+    // String? uuid = await support.getString('uuid');
     String? statusCode = await support.getString('statusCode');
 
     var url = Uri.parse('${ipAddress}/${endpoint}');
@@ -121,9 +121,9 @@ class ApiController {
           )
           .timeout(const Duration(seconds: 30));
 
-      // print(jsonEncode(data));
+      print(jsonEncode(data));
       Map<String, dynamic> responseData = jsonDecode(response.body);
-
+      print(responseData);
       if (response.statusCode == 201 || response.statusCode == 200) {
         Map<String, dynamic> responseData = jsonDecode(response.body);
         // print(responseData);
@@ -228,7 +228,7 @@ class ApiController {
     var support = await Support.init();
 
     String? token = await support.getString('token');
-    String? uuid = await support.getString('uuid');
+    // String? uuid = await support.getString('uuid');
     String? statusCode = await support.getString('statusCode');
 
     var url = Uri.parse('${ipAddress}/$endpoint');
@@ -243,7 +243,7 @@ class ApiController {
           .post(url, headers: headers, body: jsonEncode(data))
           .timeout(const Duration(seconds: 20));
       var body = jsonDecode(response.body);
-
+      print(body);
       if (response.statusCode == 200) {
         if (body is Map &&
             (body['status'] == 'Token is Invalid' ||
@@ -264,6 +264,7 @@ class ApiController {
         }
       }
     } catch (e) {
+      print(e);
       EasyLoading.showError('Failed to fetch data. Please try again.',
           duration: const Duration(milliseconds: 1000));
       return null;

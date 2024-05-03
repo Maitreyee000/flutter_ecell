@@ -40,7 +40,7 @@ class ApiController {
     var support = await Support.init();
 
     String? token = await support.getString('token');
-    String? uuid = await support.getString('uuid');
+    // String? uuid = await support.getString('uuid');
     String? statusCode = await support.getString('statusCode');
 
     var url = Uri.parse('${ipAddress}/${endpoint}');
@@ -229,7 +229,7 @@ class ApiController {
     var support = await Support.init();
 
     String? token = await support.getString('token');
-    String? uuid = await support.getString('uuid');
+    // String? uuid = await support.getString('uuid');
     String? statusCode = await support.getString('statusCode');
 
     var url = Uri.parse('${ipAddress}/$endpoint');

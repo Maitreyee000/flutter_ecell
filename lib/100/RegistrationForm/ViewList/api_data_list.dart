@@ -21,12 +21,12 @@ class _ApiDataListState extends State<ApiDataList> {
 
   Future<void> loadInitialData() async {
     var support = await Support.init();
-    var uuid = await support.getString("uuid");
-    var data = {"phone": uuid.toString()};
+    // var uuid = await support.getString("uuid");
+    var data = {"phone": ""};
 
     details =
         await apiController.getDataListById(context, "user_cell_list", data);
-
+    print(details);
     setState(() {
       isLoading = false;
     });
@@ -141,7 +141,7 @@ class _ApiDataListState extends State<ApiDataList> {
             VerticalDivider(),
             buildCell("Name", flex: 2, color: Colors.white),
             VerticalDivider(),
-            buildCell("Phone", flex: 2, color: Colors.white),
+            buildCell("District Name", flex: 2, color: Colors.white),
             VerticalDivider(),
             buildCell("Action", color: Colors.white),
           ],
@@ -169,7 +169,7 @@ class _ApiDataListState extends State<ApiDataList> {
             ),
             VerticalDivider(),
             buildCell(
-              "${data['phone']}",
+              "${data['districtName']}",
               flex: 2,
             ),
             VerticalDivider(),

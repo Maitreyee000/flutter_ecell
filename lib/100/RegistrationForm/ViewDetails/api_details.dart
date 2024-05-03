@@ -35,9 +35,9 @@ class _ApiDetailsState extends State<ApiDetails> {
 
   Future<void> loadInitialData() async {
     var support = await Support.init();
-    String? uuid = await support.getString('uuid');
+    // String? uuid = await support.getString('uuid');
     var id = {"id": widget.idData.toString()};
-    var payload = {"phone": uuid.toString()};
+    var payload = {"phone": ""};
     dropdown_cell_name = await apiController.getDataListById(
         context, "get_dropdown_cell_list", payload);
 
@@ -46,7 +46,7 @@ class _ApiDetailsState extends State<ApiDetails> {
     data = response;
 
     name.text = data!['name'].toString();
-    phone.text = data!['phone'].toString();
+    // phone.text = data!['phone'].toString();
     sel_cell_name = data['cell_id'].toString();
     setState(() {
       isLoading = false;
@@ -167,8 +167,8 @@ class _ApiDetailsState extends State<ApiDetails> {
                                 onPressed: () async {
                                   Map<String, dynamic> formData = {};
                                   var support = await Support.init();
-                                  String? uuid =
-                                      await support.getString('uuid');
+                                  // String? uuid =
+                                  //     await support.getString('uuid');
                                   formData = {
                                     "id": widget.idData.toString(),
                                     "name": name.text.trim().toString(),
@@ -176,7 +176,6 @@ class _ApiDetailsState extends State<ApiDetails> {
                                     "phone": phone.text.trim().toString(),
                                     "password": password.text.trim().toString(),
                                     "is_active": data['is_active'].toString(),
-                                    "updated_by": uuid?.trim().toString(),
                                   };
 
                                   if (await apiController.uploadData(

@@ -136,7 +136,7 @@ class Logout {
   static Future<void> logoutFun() async {
     var support = await Support.init();
     await support.remove('token');
-    await support.remove("uuid");
+    // await support.remove("uuid");
     await support.remove("id");
     await support.remove("name");
   }
@@ -299,8 +299,8 @@ class Miscellaneous {
   getAddress() {
     // return "http://192.168.137.84:5000/api";
     // return "http://10.177.15.135/cell-requirement-system/public/api";
-    return "http://10.177.15.121/ep_project/prayukti-sewa/public/api/ecell";
-    // return "https://eprayuktisewa.assam.gov.in/api/ecell";
+    // return "http://10.177.15.121/ep_project/prayukti-sewa/public/api/ecell";
+    return "https://eprayuktisewa.assam.gov.in/api/ecell";
   }
 
   getKey() {

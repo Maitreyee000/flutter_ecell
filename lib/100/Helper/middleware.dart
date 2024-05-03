@@ -10,14 +10,14 @@ class Middleware extends StatefulWidget {
 class _MiddlewareState extends State<Middleware> {
   Future<void> start() async {
     var support = await Support.init();
-    String? uuid = await support.getString('uuid');
+    String? token = await support.getString('token');
     bool justLoggedIn = await support.getBool('justLoggedIn') ?? false;
     try {
-      if (uuid != null) {
+      if (token != null) {
         if (justLoggedIn) {
           await FileManager().deleteAllFiles();
           await support.setBool('justLoggedIn', false);
-          if (await loadData(uuid)) {
+          if (await loadData(token)) {
             navigateTo(Home());
           } else {
             logoutAndShowMessage();
@@ -36,7 +36,7 @@ class _MiddlewareState extends State<Middleware> {
     }
   }
 
-  Future<bool> loadData(String? uuid) async {
+  Future<bool> loadData(String? token) async {
     var support = await Support.init();
     String? _token = await support.getString('token');
     String? statusCode = await support.getString('statusCode');
