@@ -1,5 +1,6 @@
 import 'package:cell_req/300/SveepForm/SveepFormHome.dart';
-
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+export 'package:flutter_pdfview/flutter_pdfview.dart';
 import '../../Helper/index.dart';
 import 'package:http/http.dart' as http;
 
@@ -87,7 +88,7 @@ class _ApiDetailsState extends State<ApiDetails> {
             },
           ),
         ),
-        body: data == null
+        body: data['photo'] == null
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Container(
@@ -109,20 +110,20 @@ class _ApiDetailsState extends State<ApiDetails> {
                             customValidator: validator.validateText,
                             keyboardType: TextInputType.text,
                           ),
-                          customForm.textFormField(
-                            readOnly: true,
-                            maxLength: 10,
-                            field_name: "Phone",
-                            controller: phone,
-                            customValidator: validator.validatePhone,
-                            keyboardType: TextInputType.phone,
-                          ),
+                          // customForm.textFormField(
+                          //   readOnly: true,
+                          //   maxLength: 10,
+                          //   field_name: "Phone",
+                          //   controller: phone,
+                          //   customValidator: validator.validatePhone,
+                          //   keyboardType: TextInputType.phone,
+                          // ),
                           customForm.tableSection(children: [
-                            customForm.imageFieldBase64(
-                              field_name: "Photo",
-                              base64Image: data['photo'],
-                              context: context,
-                            ),
+                            customForm.tableRowFieldBase64(
+                                fieldName: "Pdf",
+                                base64Data: data['photo'],
+                                context: context,
+                                fileType: "pdf"),
                           ]),
                           customForm.textFormField(
                             readOnly: true,
@@ -145,7 +146,6 @@ class _ApiDetailsState extends State<ApiDetails> {
                             customValidator: validator.validateText,
                             keyboardType: TextInputType.text,
                           ),
-
                           // Container(
                           //   margin: EdgeInsets.all(10),
                           //   child: CustomElevatedButton(
@@ -184,5 +184,13 @@ class _ApiDetailsState extends State<ApiDetails> {
                           //       buttonText: "Update"),
                           // )
                         ]))));
+  }
+
+  Future<String> _saveFile(Uint8List bytes, String filename) async {
+    Directory tempDir = await getTemporaryDirectory();
+    String filePath = '${tempDir.path}/$filename';
+    File file = File(filePath);
+    await file.writeAsBytes(bytes);
+    return filePath;
   }
 }
