@@ -9,10 +9,11 @@ class _MiddlewareState extends State<Middleware> {
   Future<void> start() async {
     var support = await Support.init();
     String? statusCode = await support.getString('statusCode');
-    String? uuid = await support.getString('uuid');
+
     String? token = await support.getString('token');
     bool justLoggedIn = await support.getBool('justLoggedIn') ?? false;
-    if (token != null && uuid != null) {
+
+    if (token != null) {
       try {
         final jwt = JWT.decode(token);
         if (jwt.payload['exp'] != null) {

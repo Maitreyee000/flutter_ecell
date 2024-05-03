@@ -112,11 +112,10 @@ class _CellFormState extends State<CellForm> {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
                             var support = await Support.init();
-                            String? uuid = await support.getString('uuid');
+                            // String? uuid = await support.getString('uuid');
                             var data = {
                               "cell_id": cell_no.text.toString(),
                               "cell_name": cell_name.text.toString(),
-                              "created_by": uuid.toString(),
                             };
                             if (await apiController.uploadData(
                                 data, "register_cell", context)) {

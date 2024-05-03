@@ -36,8 +36,8 @@ class _RequirementFormState extends State<RequirementForm> {
   Future<void> loadInitialData() async {
     EasyLoading.show(status: "Loading...");
     var support = await Support.init();
-    String? uuid = await support.getString('uuid');
-    var data = {"phone": uuid.toString()};
+    // String? uuid = await support.getString('uuid');
+    var data = {"phone": ""};
     dropdown_cell =
         await apiController.getDataListById(context, "cell_list", data);
 
@@ -205,11 +205,11 @@ class _RequirementFormState extends State<RequirementForm> {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
                                   var support = await Support.init();
-                                  String? uuid =
-                                      await support.getString('uuid');
+                                  // String? uuid =
+                                  //     await support.getString('uuid');
                                   var data = {
                                     "dynamic_data": req,
-                                    "phone": uuid.toString(),
+                                    // "phone": uuid.toString(),
                                   };
 
                                   if (await apiController.uploadData(data,

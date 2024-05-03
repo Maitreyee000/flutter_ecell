@@ -35,7 +35,7 @@ class _ApiDetailsState extends State<ApiDetails> {
 
   Future<void> loadInitialData() async {
     var support = await Support.init();
-    String? uuid = await support.getString('uuid');
+
     var id = {"id": widget.idData.toString()};
 
     var response =
@@ -43,7 +43,7 @@ class _ApiDetailsState extends State<ApiDetails> {
     data = response;
 
     name.text = data!['name'].toString();
-    phone.text = data!['phone'].toString();
+    // phone.text = data!['phone'].toString();
     sel_cell_name = data['cell_id'].toString();
     setState(() {
       isLoading = false;
@@ -161,7 +161,6 @@ class _ApiDetailsState extends State<ApiDetails> {
                                     "phone": phone.text.trim().toString(),
                                     "password": password.text.trim().toString(),
                                     "is_active": data['is_active'].toString(),
-                                    "updated_by": uuid?.trim().toString(),
                                   };
 
                                   if (await apiController.uploadData(

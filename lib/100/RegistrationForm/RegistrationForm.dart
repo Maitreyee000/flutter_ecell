@@ -24,8 +24,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
   Future<void> loadDataAndInitialize() async {
     EasyLoading.show(status: "Loading...");
     var support = await Support.init();
-    String? uuid = await support.getString('uuid');
-    var data = {"phone": uuid.toString()};
+    // String? uuid = await support.getString('uuid');
+    var data = {"phone": ""};
     dropdown_cell_name = await apiController.getDataListById(
         context, "get_dropdown_cell_list", data);
 
@@ -136,13 +136,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   var support = await Support.init();
-                  String? uuid = await support.getString('uuid');
+                  // String? uuid = await support.getString('uuid');
                   var data = {
                     "phone": p_no.text.toString(),
                     "name": name.text.toString(),
                     "cell_id": sel_cell_name.toString(),
                     "password": password.text.toString(),
-                    "created_by": uuid.toString(),
                     "role_id": "200",
                   };
 

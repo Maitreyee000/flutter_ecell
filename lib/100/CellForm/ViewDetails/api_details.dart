@@ -123,14 +123,13 @@ class _ApiDetailsState extends State<ApiDetails> {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
                                   var support = await Support.init();
-                                  String? uuid =
-                                      await support.getString('uuid');
+                                  // String? uuid =
+                                  //     await support.getString('uuid');
                                   var payload = {
                                     "id": widget.idData.toString(),
                                     "cell_id": cell_id.text.toString(),
                                     "cell_name": cell_name.text.toString(),
                                     "is_active": data['is_active'].toString(),
-                                    "updated_by": uuid.toString(),
                                   };
                                   if (await apiController.uploadData(
                                       payload, "update_cell", context)) {
