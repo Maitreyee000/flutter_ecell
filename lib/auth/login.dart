@@ -10,7 +10,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController uuid = TextEditingController();
   TextEditingController password = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>(); //whats this
   bool isPasswordVisible = false;
   bool acceptedTerms = false;
   final customForm = CustomForm();
@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
               ),
               padding: EdgeInsets.all(20),
               child: Form(
-                  key: _formKey,
+                  key: _formKey, //where is form key defined exactly
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

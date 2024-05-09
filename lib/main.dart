@@ -1,7 +1,9 @@
 import 'index.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 Timer? _rootTimer;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
